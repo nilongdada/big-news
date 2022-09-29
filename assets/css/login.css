@@ -30,6 +30,41 @@ html, body {
   line-height: 60px;
 }
 
+/* 登录的表单 */
+.login-wrap {
+  padding: 0 30px;
+}
+
+/* 注册账号按钮 */
+.links {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.links a {
+  font-size: 12px;
+}
+
+/* 定位字体图标 (子绝父相)*/
+.layui-form-item {
+  position: relative;
+}
+
+.layui-icon {
+  position: absolute;
+  left: 10px;
+  top: 9px;
+}
+
+.layui-input {
+  padding-left: 32px;
+}
+
+
+
+
+
 .reg-wrap {
+  padding: 0 30px;
   display: none;
 }
