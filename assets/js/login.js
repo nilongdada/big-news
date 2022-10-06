@@ -1,4 +1,8 @@
 $(function () {
+  // 需要从 layui对象身上取到 form
+  const form = layui.form
+  const layer = layui.layer
+
   // 点击去注册
   $('#go2Reg').on('click', function () {
     $('.login-wrap').hide()
@@ -10,10 +14,6 @@ $(function () {
     $('.reg-wrap').hide()
     $('.login-wrap').show()
   })
-
-  // 需要从 layui对象身上取到 form
-  const form = layui.form
-  const layer = layui.layer
 
   form.verify({
     // 添加自定义规则
@@ -30,31 +30,25 @@ $(function () {
 
   // 给注册表单添加提交事件（会刷新浏览器）
   // $('#formReg').submit(function () {})
-  $('#formReg').on('submit', function (e) {
-    // 阻止默认提交动作
-    e.preventDefault()
+  // $('#formReg').on('submit', function (e) {
+  //   // 阻止默认提交动作
+  //   e.preventDefault()
 
-    // 发请求了 ajax
-    // 经过分析：1、修改 Content-Type 2、需要将参数转成 json 格式
-    $.ajax({
-      method: 'POST',
-      url: '/api/reg',
-      // data: JSON.stringify({
-      //   // 可以将对象转成json格式的字符串
-      //   username: $('#formReg [name=username]').val(),
-      //   password: $('#formReg [name=password]').val(),
-      //   repassword: $('#formReg [name=repassword]').val()
-      // }),
-      data: $(this).serialize(),
-      success(res) {
-        if (res.code !== 0) return layer.msg(res.message)
-        $('#go2Login').click()
-        // $('#go2Login').trigger('click')
-        layer.msg('注册成功')
-        // 打开登录表单(模拟点击操作：1、click 2、trigger('click') 3、triggerHandler('click'))
-      }
-    })
-  })
+  //   // 发请求了 ajax
+  //   // 经过分析：1、修改 Content-Type 2、需要将参数转成 json 格式
+  //   $.ajax({
+  //     method: 'POST',
+  //     url: '/api/reg',
+  //     data: format2Json($(this).serialize()),
+  //     success(res) {
+  //       if (res.code !== 0) return layer.msg(res.message)
+  //       $('#go2Login').click()
+  //       // $('#go2Login').trigger('click')
+  //       layer.msg('注册成功')
+  //       // 打开登录表单(模拟点击操作：1、click 2、trigger('click') 3、triggerHandler('click'))
+  //     }
+  //   })
+  // })
 
   $('#formLogin').submit(function (e) {
     e.preventDefault()
@@ -64,20 +58,19 @@ $(function () {
       data: $(this).serialize(),
       success(res) {
         if (res.code !== 0) return layer.msg(res.message)
-        //需要干嘛呢
-        //跳转到主页
+        // 需要干嘛呢？
+        // 跳转到主页
         // location.href = '/home.html'
-        // token 的意思是令牌的意思（下一次去请求有权限的接口的时候带着）
+        // token 意思是令牌的意思（下一次去请求有权限的接口的时候“带着”）
         localStorage.setItem('big_news_token', res.token)
 
-        //固定的写法： Bearer token字符串，Bearer译为持票人拿着token去请求
+        // 固定的写法：Bearer token字符串、Bearer 译为持票人拿着token去请求
 
         location.href = '/home.html'
       }
     })
   })
 })
-
 // 说明一下；video里面的请求地址不用了，用新的 http://big-event-vue-api-t.itheima.net
 // 原来的：Content-Type: 'application/x-www-form-urlencoded' -> key1=value1&key2=value2
 // 现在的：Content-Type需要指定：'application/json' -> '{ "key1": "value1", "key2": "value2" }'
